@@ -1,0 +1,27 @@
+.navbarWrapper{
+    display: grid;
+    grid-template-columns: 15% 15% 40% 15% 15%;
+}
+
+.navbarList{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid gray;
+    height: 50px;
+    cursor: pointer;
+}
+
+.headerTitle{
+    font-weight: bold;
+    font-size: 30px;
+}
+
+a{
+    color: black !important;
+    text-decoration: none !important;
+  }
+  
+  a:hover{
+    text-decoration: underline !important;
+  }

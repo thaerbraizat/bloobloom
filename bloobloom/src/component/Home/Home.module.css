@@ -1,0 +1,16 @@
+.containerImage{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.imageCustom{
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+    position: relative;
+}
+.cardActionCustom{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
