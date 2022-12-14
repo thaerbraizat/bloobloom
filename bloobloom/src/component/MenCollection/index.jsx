@@ -5,84 +5,112 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
-// import Box from '@mui/material/Box';
-// import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
-// import FormControl from '@mui/material/FormControl';
-// import Select from '@mui/material/Select';
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import Grid from "@mui/material/Grid";
 
 export default function MenCollection() {
   const [dataCollection, setDataCollection] = useState([]);
 
-
   // commented code for implement the filters
-  // const [showFilter, setShowFilter] = React.useState(true);
-  // const [filter, setFilter] = React.useState({});
+  const [showFilter, setShowFilter] = React.useState(false);
+  const [filter, setFilter] = React.useState({});
 
-  // const handleShowFilter = () => {
-  //   setShowFilter(!showFilter);
-  // };
+  const updateFilter = (e) => {
+    setFilter({ ...filter, [e.target.name]: e.target.value });
+  };
 
-  // const updateFilter = (e) => {
-  //   setFilter({ ...filter, [e.target.name]: e.target.value });
-  // };
-
-  // useEffect(() => {}, [filter]);
-
-
+  async function fetchData(params) {
+    // const getParams = new URLSearchParams({ ...params }).toString();
+    let data = await Women.getDataCollection(params);
+    setDataCollection(data);
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      let data = await Women.getDataCollection();
-      setDataCollection(data);
-      let dataSunglasses= await Women.getSunglassesDataCollection();
-      console.log("dataSunglasses",dataSunglasses);
-    }
-
     fetchData();
   }, []);
 
+  const handleSubmitFilter = () => {
+    fetchData(filter);  
+  };
+  const handleFilter = () => {
+    setShowFilter(!showFilter);
+  };
 
   return (
     <>
+      <Button
+        size="small"
+        color="secondary"
+        variant="outlined"
+        onClick={handleFilter}
+      >
+        Filter
+      </Button>
       <div>
-        {/* {showFilter ? (
-          <div >
-            <div >
+        {showFilter ? (
+          <div>
+            <div>
               <h1>Filters</h1>
             </div>
             <Grid container spacing={2}>
               <Grid item xs={3} xl={3}>
-                <Typography variant="caption">Make</Typography>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Fit</InputLabel>
+                    <InputLabel id="demo-simple-select-label">
+                      colour
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={filter?.fit}
-                      label="Fit"
-                      name="Fit"
+                      value={filter?.colour}
+                      label="colour"
+                      name="colour"
                       onChange={updateFilter}
                     >
-                      <MenuItem value="Wide">Wide</MenuItem>
-                      <MenuItem value="Medium">Medium</MenuItem>
-                      <MenuItem value="Narrow">Narrow</MenuItem>
+                      <MenuItem value="black">black</MenuItem>
+                      <MenuItem value="tortoise">tortoise</MenuItem>
+                      <MenuItem value="coloured">coloured</MenuItem>
+                      <MenuItem value="crystal">crystal</MenuItem>
+                      <MenuItem value="bright">bright</MenuItem>
+                      <MenuItem value="dark">dark</MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
               </Grid>
-        
-             
+
+              <Grid item xs={3} xl={3}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Shape</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={
+                        filter?.glass_variant_frame_variant_frame_tag_configuration_names
+                      }
+                      label="Shape"
+                      name="Shape"
+                      onChange={updateFilter}
+                    >
+                      <MenuItem value="round">round</MenuItem>
+                      <MenuItem value="Acetate">rectangle</MenuItem>
+                      <MenuItem value="cat-eye">square</MenuItem>
+                      <MenuItem value="cat-eye">cat-eye</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Grid>
             </Grid>
-            <div >
-             
+            <div>
               <Button
                 variant="contained"
                 circular={true}
                 color="info"
-                onClick={handleShowFilter}
+                onClick={handleSubmitFilter}
               >
                 Done
               </Button>
@@ -90,7 +118,7 @@ export default function MenCollection() {
           </div>
         ) : (
           ""
-        )} */}
+        )}
       </div>
       <Grid container spacing={2}>
         {dataCollection &&
